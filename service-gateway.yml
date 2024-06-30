@@ -1,0 +1,65 @@
+server:
+  port: ${HOST_PORT:8891}
+
+# Server Admin Client
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8890
+        instance:
+          management-base-url: http://localhost:${server.port}
+        
+# Server Registry Client
+eureka:
+  client:
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: ${HOST_EUREKA_SERVER:http://localhost:8889/eureka}
+  instance:
+    prefer-ip-address: true
+
+# Endpoints exposition
+management:
+  endpoints:
+    web:
+     exposure:
+       include: "*"
+     health:
+       show-details: always
+  endpoint:
+    gateway:
+      enabled: false
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: service-reservation
+          uri: lb://SERVICE-RESERVATION
+          predicates:
+            - Path=/reservation/**
+        - id: service-event
+          uri: lb://SERVICE-EVENT
+          predicates:
+            - Path=/event/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: serviceEventCircuitBreaker
+                fallbackUri: forward:/fallback/event
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      serviceEventCircuitBreaker:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        minimumNumberOfCalls: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        slidingWindowType: COUNT_BASED
+
