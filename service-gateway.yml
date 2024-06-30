@@ -6,7 +6,7 @@ spring:
   boot:
     admin:
       client:
-        url: http://${HOST_ADMIN_SERVER:localhost}:${HOST_ADMIN_PORT:8890}
+        url: ${HOST_ADMIN_SERVER:http://localhost:8890}
         instance:
           management-base-url: http://localhost:${server.port}
         
