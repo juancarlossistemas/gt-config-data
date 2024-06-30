@@ -1,0 +1,56 @@
+server:
+   port: ${HOST_PORT:8081}
+
+# PostgreSQL
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_DATABASE:db-event}
+    username: ${DB_USER:root}
+    password: ${DB_PASS:root}
+
+---
+# Server Admin Client
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8890
+        instance:
+          management-base-url: http://localhost:${server.port}
+        
+# Server Registry Client
+eureka:
+   client:
+      fetch-registry: true
+      serviceUrl:
+         defaultZone: ${HOST_EUREKA_SERVER:http://localhost:8889/eureka}
+
+# Endpoints exposition
+management:
+  endpoints:
+    web:
+     exposure:
+       include: "*"
+     health:
+       show-details: always
+  endpoint:
+    gateway:
+      enabled: false
+  health:
+    circuitbreakers:
+      enabled: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      event:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        minimumNumberOfCalls: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        slidingWindowType: COUNT_BASED
+        ignoreExceptions:
+          - pe.juancarlossoto.event.exception.NotFoundException
