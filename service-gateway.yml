@@ -72,6 +72,10 @@ spring:
               args:
                 name: serviceNotificationCircuitBreaker
                 fallbackUri: forward:/fallback/notification
+        - id: service-client-sql
+          uri: lb://SERVICE-CLIENT-SQL
+          predicates:
+            - Path=/client/**
 
 resilience4j:
   circuitbreaker:
