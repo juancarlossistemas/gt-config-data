@@ -1,0 +1,49 @@
+server:
+   port: ${HOST_PORT:8084}
+
+---
+spring:
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:juan.soto.sistemas@gmail.com}
+    password: ${MAIL_PASSWORD:tsmikorezhyyblxw}
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: ${MAIL_TLS_ENABLE:true}
+            required: ${MAIL_TLS_REQUIRED:true}
+          auth: ${MAIL_AUTH:true}
+          connectiontimeout: 10000
+          timeout: 10000
+          writetimeout: 10000
+
+---
+# Server Admin Client
+spring:
+  boot:
+    admin:
+      client:
+        url: ${HOST_ADMIN_SERVER:http://localhost:8890}
+        instance:
+          management-base-url: http://localhost:${server.port}
+        
+# Server Registry Client
+eureka:
+   client:
+      fetch-registry: true
+      serviceUrl:
+         defaultZone: ${HOST_EUREKA_SERVER:http://localhost:8889/eureka}
+
+# Endpoints exposition
+management:
+  endpoints:
+    web:
+     exposure:
+       include: "*"
+     health:
+       show-details: always
+  endpoint:
+    gateway:
+      enabled: false
