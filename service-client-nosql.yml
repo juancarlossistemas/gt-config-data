@@ -35,7 +35,7 @@ mongo:
   password: ${DB_PASS:secret}
   host: ${DB_HOST:localhost}
   port: ${DB_PORT:27017}
-  database: ${DB_DATABASE:project-163}
+  database: ${DB_DATABASE:admin}
   ssl-enabled: false
   connection-timeout: 100000
   socket-timeout: 100000
