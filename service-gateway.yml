@@ -40,6 +40,11 @@ spring:
           uri: lb://SERVICE-RESERVATION
           predicates:
             - Path=/reservation/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: serviceReservationCircuitBreaker
+                fallbackUri: forward:/fallback/reservation
         - id: service-event
           uri: lb://SERVICE-EVENT
           predicates:
@@ -49,11 +54,56 @@ spring:
               args:
                 name: serviceEventCircuitBreaker
                 fallbackUri: forward:/fallback/event
+        - id: service-payment
+          uri: lb://SERVICE-PAYMENT
+          predicates:
+            - Path=/payment/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: servicePaymentCircuitBreaker
+                fallbackUri: forward:/fallback/payment
+        - id: service-notification
+          uri: lb://SERVICE-NOTIFICATION
+          predicates:
+            - Path=/notification/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: serviceNotificationCircuitBreaker
+                fallbackUri: forward:/fallback/notification
 
 resilience4j:
   circuitbreaker:
     instances:
+      serviceReservationCircuitBreaker:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        minimumNumberOfCalls: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        slidingWindowType: COUNT_BASED
       serviceEventCircuitBreaker:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        minimumNumberOfCalls: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        slidingWindowType: COUNT_BASED
+      servicePaymentCircuitBreaker:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        minimumNumberOfCalls: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        slidingWindowType: COUNT_BASED
+      serviceNotificationCircuitBreaker:
         registerHealthIndicator: true
         slidingWindowSize: 10
         failureRateThreshold: 50
