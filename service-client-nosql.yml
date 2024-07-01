@@ -1,0 +1,51 @@
+server:
+   port: ${HOST_PORT:8086}
+
+# Server Admin Client
+spring:
+  boot:
+    admin:
+      client:
+        url: ${HOST_ADMIN_SERVER:http://localhost:8890}
+        instance:
+          management-base-url: http://localhost:${server.port}
+        
+# Server Registry Client
+eureka:
+   client:
+      fetch-registry: true
+      serviceUrl:
+         defaultZone: ${HOST_EUREKA_SERVER:http://localhost:8889/eureka}
+
+# Endpoints exposition
+management:
+  endpoints:
+    web:
+     exposure:
+       include: "*"
+     health:
+       show-details: always
+  endpoint:
+    gateway:
+      enabled: false
+
+#
+#mongo:
+#  user: juansoto
+#  password: admin123
+#  host: localhost
+#  port: 27016
+#  database: project-163
+#  ssl-enabled: false
+#  connection-timeout: 100000
+#  socket-timeout: 100000
+---
+spring:
+  data:
+    mongodb:
+      host: gt-mongo-p163
+      port: 27017
+      database: project-163
+      username: root
+      password: secret
+      authentication-database: admin
