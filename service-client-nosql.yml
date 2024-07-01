@@ -29,23 +29,13 @@ management:
     gateway:
       enabled: false
 
-#
-#mongo:
-#  user: juansoto
-#  password: admin123
-#  host: localhost
-#  port: 27016
-#  database: project-163
-#  ssl-enabled: false
-#  connection-timeout: 100000
-#  socket-timeout: 100000
 ---
-spring:
-  data:
-    mongodb:
-      host: gt-mongo-p163
-      port: 27017
-      database: project-163
-      username: root
-      password: secret
-      authentication-database: admin
+mongo:
+  user: ${DB_USER:root}
+  password: ${DB_PASS:secret}
+  host: ${DB_HOST:localhost}
+  port: ${DB_PORT:27017}
+  database: ${DB_DATABASE:project-163}
+  ssl-enabled: false
+  connection-timeout: 100000
+  socket-timeout: 100000
