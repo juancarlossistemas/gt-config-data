@@ -72,10 +72,15 @@ spring:
               args:
                 name: serviceNotificationCircuitBreaker
                 fallbackUri: forward:/fallback/notification
-        - id: service-client-sql
-          uri: lb://SERVICE-CLIENT-SQL
+        - id: service-cqrs
+          uri: lb://SERVICE-CQRS
           predicates:
             - Path=/client/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: serviceCqrsCircuitBreaker
+                fallbackUri: forward:/fallback/cqrs
 
 resilience4j:
   circuitbreaker:
@@ -108,6 +113,15 @@ resilience4j:
         automaticTransitionFromOpenToHalfOpenEnabled: true
         slidingWindowType: COUNT_BASED
       serviceNotificationCircuitBreaker:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        minimumNumberOfCalls: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        slidingWindowType: COUNT_BASED
+      serviceCqrsCircuitBreaker:
         registerHealthIndicator: true
         slidingWindowSize: 10
         failureRateThreshold: 50
