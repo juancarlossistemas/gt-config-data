@@ -81,6 +81,15 @@ spring:
               args:
                 name: serviceCqrsCircuitBreaker
                 fallbackUri: forward:/fallback/cqrs
+        - id: service-orchestrator
+          uri: lb://SERVICE-ORCHESTRATOR
+          predicates:
+            - Path=/process-reservation/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: serviceOrchestratorCircuitBreaker
+                fallbackUri: forward:/fallback/orchestrator
 
 resilience4j:
   circuitbreaker:
@@ -122,6 +131,15 @@ resilience4j:
         automaticTransitionFromOpenToHalfOpenEnabled: true
         slidingWindowType: COUNT_BASED
       serviceCqrsCircuitBreaker:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        minimumNumberOfCalls: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        slidingWindowType: COUNT_BASED
+      serviceOrchestratorCircuitBreaker:
         registerHealthIndicator: true
         slidingWindowSize: 10
         failureRateThreshold: 50
