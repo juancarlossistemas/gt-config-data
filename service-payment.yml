@@ -40,7 +40,7 @@ management:
 ---
 spring:
   redis:
-    host: ${REDIS_HOST:localhost}
+    host: ${REDIS_HOST:192.168.18.200}
     port: ${REDIS_PORT:6379}
     lettuce:
       pool:
