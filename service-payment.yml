@@ -38,18 +38,18 @@ management:
       enabled: false
 
 ---
-spring:
-  redis:
-    host: ${REDIS_HOST:192.168.18.200}
-    port: ${REDIS_PORT:6379}
-    lettuce:
-      pool:
-        max-active: 10
-        max-idle: 5
-        min-idle: 1
-  cache:
-    type: redis
-    redis:
-      time-to-live: 600000  # TTL en milisegundos (10 minutos)
+#spring:
+#  redis:
+#    host: ${REDIS_HOST:localhost}
+#    port: ${REDIS_PORT:6379}
+#    lettuce:
+#      pool:
+#        max-active: 10
+#        max-idle: 5
+#        min-idle: 1
+#  cache:
+#    type: redis
+#    redis:
+#      time-to-live: 600000  # TTL en milisegundos (10 minutos)
       #cache-null-values: false  # No almacenar valores nulos en caché
       #key-prefix: yourPrefix::  # Prefijo opcional para las claves en caché
