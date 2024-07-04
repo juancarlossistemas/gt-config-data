@@ -40,15 +40,21 @@ spring:
           uri: lb://SERVICE-SECURITY
           predicates:
             - Path=/auth/**
+          filters:
+            - name: JwtAuthentication
+              args:
+                secured: false
         - id: service-reservation
           uri: lb://SERVICE-RESERVATION
           predicates:
             - Path=/reservation/**
           filters:
+            - name: JwtAuthentication
             - name: CircuitBreaker
               args:
                 name: serviceReservationCircuitBreaker
                 fallbackUri: forward:/fallback/reservation
+                secured: false
         - id: service-event
           uri: lb://SERVICE-EVENT
           predicates:
@@ -59,6 +65,7 @@ spring:
               args:
                 name: serviceEventCircuitBreaker
                 fallbackUri: forward:/fallback/event
+                secured: true
         - id: service-payment
           uri: lb://SERVICE-PAYMENT
           predicates:
