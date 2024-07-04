@@ -50,6 +50,7 @@ spring:
           predicates:
             - Path=/event/**
           filters:
+            - name: JwtAuthenticationFilter
             - name: CircuitBreaker
               args:
                 name: serviceEventCircuitBreaker
