@@ -67,6 +67,7 @@ spring:
           predicates:
             - Path=/payment/**
           filters:
+            - name: JwtAuthentication
             - name: CircuitBreaker
               args:
                 name: servicePaymentCircuitBreaker
@@ -76,6 +77,7 @@ spring:
           predicates:
             - Path=/notification/**
           filters:
+            - name: JwtAuthentication
             - name: CircuitBreaker
               args:
                 name: serviceNotificationCircuitBreaker
@@ -85,6 +87,7 @@ spring:
           predicates:
             - Path=/client/**
           filters:
+            - name: JwtAuthentication
             - name: CircuitBreaker
               args:
                 name: serviceCqrsCircuitBreaker
@@ -94,6 +97,7 @@ spring:
           predicates:
             - Path=/process-reservation/**
           filters:
+            - name: JwtAuthentication
             - name: CircuitBreaker
               args:
                 name: serviceOrchestratorCircuitBreaker
