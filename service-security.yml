@@ -1,2 +1,43 @@
 server:
   port: ${HOST_PORT:8093}
+
+# PostgreSQL
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_DATABASE:db-security}
+    username: ${DB_USER:root}
+    password: ${DB_PASS:root}
+
+---
+# Server Admin Client
+spring:
+  boot:
+    admin:
+      client:
+        url: ${HOST_ADMIN_SERVER:http://localhost:8890}
+        instance:
+          management-base-url: http://localhost:${server.port}
+
+# Server Registry Client
+eureka:
+  client:
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: ${HOST_EUREKA_SERVER:http://localhost:8889/eureka}
+  instance:
+    prefer-ip-address: true
+
+application:
+  security:
+    secret: ${SECURITY_SECRET:31bebf8548614f31863834cee33f98e2}
+    timeExpiration: ${SECURITY_EXPIRATION:172800000}
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+      hibernate:
+        SQL: DEBUG
+    pe.juancarlossoto.security: DEBUG
+
