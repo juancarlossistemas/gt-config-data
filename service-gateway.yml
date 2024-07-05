@@ -85,7 +85,7 @@ spring:
         - id: service-cqrs
           uri: lb://SERVICE-CQRS
           predicates:
-            - Path=/client/**
+            - Path=/cqrs/**
           filters:
             - name: JwtAuthentication
             - name: CircuitBreaker
