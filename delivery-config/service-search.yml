@@ -1,6 +1,12 @@
 server:
    port: ${HOST_PORT:8083}
 
+# PostgreSQL
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_DATABASE:db-event}
+    username: ${DB_USER:root}
+    password: ${DB_PASS:root}
 ---
 # Server Admin Client
 spring:
