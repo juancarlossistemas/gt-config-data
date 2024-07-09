@@ -36,7 +36,7 @@ management:
 resilience4j:
   circuitbreaker:
     instances:
-      test:
+      testnew:
         registerHealthIndicator: true
         slidingWindowSize: 10
         failureRateThreshold: 50
