@@ -1,0 +1,36 @@
+server:
+  port: ${HOST_PORT:9091}
+
+# Server Admin Client
+spring:
+  boot:
+    admin:
+      client:
+        url: ${HOST_ADMIN_SERVER:http://localhost:9090}
+        instance:
+          management-base-url: http://localhost:${server.port}
+
+# Server Registry Client
+eureka:
+  client:
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: ${HOST_EUREKA_SERVER:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+
+#Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,metrics,refresh"
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
