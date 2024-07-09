@@ -22,21 +22,16 @@ eureka:
 management:
   endpoints:
     web:
-      exposure:
-        include: "health,info,metrics,refresh"
-  health:
-    readinessstate:
-      enabled: true
-    livenessstate:
-      enabled: true
-    circuitbreakers:
-      enabled: true
+     exposure:
+       include: "*"
+     health:
+       show-details: always
   endpoint:
-    health:
-      probes:
-        enabled: true
     gateway:
       enabled: false
+  health:
+    circuitbreakers:
+      enabled: true
 
 resilience4j:
   circuitbreaker:
