@@ -34,3 +34,13 @@ management:
     health:
       probes:
         enabled: true
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: service-security
+          uri: lb://SERVICE-SECURITY
+          predicates:
+            - Path=/auth/**
