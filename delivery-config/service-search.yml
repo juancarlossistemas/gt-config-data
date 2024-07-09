@@ -36,7 +36,7 @@ management:
       probes:
         enabled: true
     gateway:
-      enabled: true
+      enabled: false
 
 resilience4j:
   circuitbreaker:
