@@ -49,6 +49,12 @@ spring:
               args:
                 name: serviceSearchCircuitBreaker
                 fallbackUri: forward:/fallback/search
+        - id: service-training
+          uri: lb://SERVICE-TRAINING
+          predicates:
+            - Path=/training/**
+          filters:
+            - name: JwtAuthentication
 
 resilience4j:
   circuitbreaker:
