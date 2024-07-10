@@ -46,6 +46,9 @@ spring:
             - Path=/training/**
           filters:
             - name: CircuitBreaker
+              args:
+                name: serviceTrainingCircuitBreaker
+                fallbackUri: forward:/fallback/training
         - id: service-search
           uri: lb://SERVICE-SEARCH
           predicates:
@@ -68,6 +71,15 @@ resilience4j:
         minimumNumberOfCalls: 10
         automaticTransitionFromOpenToHalfOpenEnabled: true
         slidingWindowType: COUNT_BASED
+      serviceTrainingCircuitBreaker:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        minimumNumberOfCalls: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        slidingWindowType: COUNT_BASED  
 
 application:
   security:
