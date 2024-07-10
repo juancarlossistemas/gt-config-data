@@ -52,7 +52,6 @@ spring:
             - Path=/test/**
           filters:
             - name: JwtAuthentication
-            - name: CircuitBreaker
               args:
                 name: serviceSearchCircuitBreaker
                 fallbackUri: forward:/fallback/search
