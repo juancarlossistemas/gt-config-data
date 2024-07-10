@@ -63,3 +63,7 @@ resilience4j:
         minimumNumberOfCalls: 10
         automaticTransitionFromOpenToHalfOpenEnabled: true
         slidingWindowType: COUNT_BASED
+
+application:
+  security:
+    secret: 31bebf8548614f31863834cee33f98e2
