@@ -51,6 +51,7 @@ spring:
           predicates:
             - Path=/test/**
           filters:
+            - name: JwtAuthentication
             - name: CircuitBreaker
               args:
                 name: serviceSearchCircuitBreaker
