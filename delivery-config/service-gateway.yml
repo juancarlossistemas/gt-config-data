@@ -45,7 +45,6 @@ spring:
           predicates:
             - Path=/training/**
           filters:
-            - name: JwtAuthentication
             - name: CircuitBreaker
         - id: service-search
           uri: lb://SERVICE-SEARCH
