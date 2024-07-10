@@ -51,6 +51,7 @@ spring:
           predicates:
             - Path=/test/**
           filters:
+            - name: CircuitBreaker
               args:
                 name: serviceSearchCircuitBreaker
                 fallbackUri: forward:/fallback/search
@@ -67,7 +68,6 @@ resilience4j:
         minimumNumberOfCalls: 10
         automaticTransitionFromOpenToHalfOpenEnabled: true
         slidingWindowType: COUNT_BASED
-        
 
 application:
   security:
