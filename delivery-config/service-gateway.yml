@@ -46,6 +46,28 @@ spring:
             - Path=/training/**
           filters:
             - name: JwtAuthentication
+        - id: service-search
+          uri: lb://SERVICE-SEARCH
+          predicates:
+            - Path=/test/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: serviceSearchCircuitBreaker
+                fallbackUri: forward:/fallback/search
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      serviceSearchCircuitBreaker:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        minimumNumberOfCalls: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        slidingWindowType: COUNT_BASED
         
 
 application:
