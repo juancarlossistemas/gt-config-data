@@ -51,7 +51,6 @@ spring:
           predicates:
             - Path=/test/**
           filters:
-            - name: JwtAuthentication
               args:
                 name: serviceSearchCircuitBreaker
                 fallbackUri: forward:/fallback/search
